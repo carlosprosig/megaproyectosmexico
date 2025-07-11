@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -60,8 +61,8 @@
     <div id="legend"></div>
     <div id="footer">
       <img src="logo-ciesas.png" alt="Logo CIESAS" height="40">
-      <img src="Logotipo_PROSIG-CSH.png" alt="Logo ProSIG-CSH" height="40">
-      <img src="logotipo-opirna.jpg" alt="Logo OPIRNA" height="40"><br>
+      <img src="logotipo-prosig-csh.png" alt="Logo ProSIG-CSH" height="40">
+      <img src="logotipo-opirna.png" alt="Logo OPIRNA" height="40"><br>
       Centro de Investigaciones y Estudios Superiores en Antropología Social (CIESAS) · ProSIG-CSH · OPIRNA<br>
       <a href="https://opirna.ciesas.edu.mx/" target="_blank">https://opirna.ciesas.edu.mx/</a>
     </div>
@@ -78,9 +79,22 @@
   <script>
     const map = L.map('map', { preferCanvas: true }).setView([23.5, -102], 5);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
-    }).addTo(map);
+    });
+
+    const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye'
+    });
+
+    osm.addTo(map);
+
+    const baseMaps = {
+      "Mapa estándar": osm,
+      "Satélite (Esri)": satelite
+    };
+
+    L.control.layers(baseMaps, null, { position: 'topleft' }).addTo(map);
 
     const colorPorTipo = {
       "Desarrollo turístico": "green",
